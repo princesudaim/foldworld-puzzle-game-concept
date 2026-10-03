@@ -116,6 +116,20 @@ export default function App() {
 
   const reset = useCallback(() => loadLevel(levelIndex), [levelIndex, loadLevel]);
 
+  const newGame = useCallback(() => {
+    if (!window.confirm('Start a new game? This will erase your saved puzzle progress.')) return;
+    try {
+      localStorage.removeItem(STORE);
+    } catch {
+      setMessage({ text: 'Could not clear saved progress. Your game was not reset.', kind: 'bad' });
+      return;
+    }
+    setSolved([]);
+    setUnlocked(0);
+    setEnding(false);
+    loadLevel(0);
+  }, [loadLevel]);
+
   const unlockNext = useCallback(
     (id: number) => {
       const idx = LEVELS.findIndex((l) => l.id === id);
@@ -395,6 +409,7 @@ export default function App() {
             onGo={go}
             onUndo={undo}
             onReset={reset}
+            onNewGame={newGame}
             onSkip={() => {
               unlockNext(level.id);
               if (levelIndex < LEVELS.length - 1) loadLevel(levelIndex + 1);

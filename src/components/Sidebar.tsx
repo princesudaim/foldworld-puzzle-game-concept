@@ -46,6 +46,7 @@ interface Props {
   onGo: () => void;
   onUndo: () => void;
   onReset: () => void;
+  onNewGame: () => void;
   onSkip: () => void;
   canUndo: boolean;
   busy: boolean;
@@ -318,6 +319,9 @@ export default function Sidebar(p: Props) {
       <div className="flex items-center justify-between gap-2 px-1">
         <Btn onClick={p.onSkip} className="!py-1.5 !text-xs">
           Skip level →
+        </Btn>
+        <Btn onClick={p.onNewGame} tone="warn" className="!py-1.5 !text-xs">
+          New Game
         </Btn>
         <span className="text-[10px] text-amber-200/40">
           space fold · enter go · z unfold · r reset
